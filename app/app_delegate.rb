@@ -1,24 +1,27 @@
 class AppDelegate
-  def application(application, didFinishLaunchingWithOptions:launchOptions)
-    puts 'なにこれ'
+  attr_accessor :tap_controller
 
-    # UIScreen describes the display our app is running on
+  def application(application, didFinishLaunchingWithOptions:launchOptions)
+
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     @window.makeKeyAndVisible
 
-    controller = TapController.alloc.initWithNibName nil, bundle:nil
-    @window.rootViewController = UINavigationController.alloc.initWithRootViewController(controller)
+    # ナビゲーションコントローラの中身
+    tap_controller = TapController.alloc.initWithNibName nil, bundle:nil
 
-    # @blue_view = UIView.alloc.initWithFrame(CGRectMake(10, 10, 100, 100))
-    # @blue_view.backgroundColor = UIColor.blueColor
-    # @window.addSubview(@blue_view)
+    # ナビゲーションコントローラ
+    nav_controller = UINavigationController.alloc.initWithRootViewController tap_controller
 
-    # @ya = UIView.alloc.initWithFrame(CGRectMake(100,100,100,100))
-    # @ya.backgroundColor = UIColor.greenColor
+    # コンンローラ2 ただのビュー
+    b_controller = AlphabetController.alloc.initWithNibName(nil, bundle: nil)
 
-    # [@blue_view, @ya].each do|v|
-      # @window.addSubview(v)
-    # end
+    # ルートビューコントローラ
+    tab_controller = UITabBarController.alloc.initWithNibName nil, bundle: nil
+    tab_controller.viewControllers = [nav_controller, b_controller]
+    self.tap_controller = tap_controller
+
+    @window.rootViewController = tab_controller
+
     
     true
   end
